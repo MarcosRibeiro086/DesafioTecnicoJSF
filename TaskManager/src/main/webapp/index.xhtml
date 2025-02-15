@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Task Manager</title>
+        <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+        <h:outputStylesheet library="css" name="layout.css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+            
+            <!-- Toolbar com Botão Novo e Atualizar -->
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Novo" icon="pi pi-plus"
+                                     actionListener="#{taskMB.novo()}"
+                                     update=":dialogs:panel-content"
+                                     oncomplete="PF('dlgTaskRegistro').show()"
+                                     styleClass="ui-button-success"
+                                     style="margin-right: .5rem">
+                        <p:resetInput target=":dialogs:panel-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <!-- Tabela de Tarefas -->
+            <p:dataTable id="dt-tasks"
+                         widgetVar="dtTasks"
+                         var="task"
+                         value="#{taskMB.tasks}"
+                         reflow="true"
+                         styleClass="products-table"
+                         paginator="true"
+                         rows="10"
+                         paginatorPosition="bottom">
+
+                <f:facet name="header">
+                    <div class="tasks-table-header">
+                        <span style="font-weight: bold">Tasks</span>
+                        <span class="filter-container ui-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <p:inputText id="globalFilter" onkeyup="PF('dtTasks').filter()" placeholder="Buscar..." />
+                        </span>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Título" filterBy="#{task.titulo}">
+                    <h:outputText value="#{task.titulo}" />
+                </p:column>
+                <p:column headerText="Descrição" filterBy="#{task.descricao}">
+                    <h:outputText value="#{task.descricao}" />
+                </p:column>
+                <p:column headerText="Responsável" filterBy="#{task.responsavel}">
+                    <h:outputText value="#{task.responsavel}" />
+                </p:column>
+                <p:column headerText="Prioridade" filterBy="#{task.prioridade}">
+                    <h:outputText value="#{task.prioridade}" />
+                </p:column>
+                <p:column headerText="Deadline">
+                    <h:outputText value="#{task.deadline}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Concluída" filterBy="#{task.concluida ? 'Sim' : 'Não'}" >
+                    <h:outputText value="#{task.concluida ? 'Sim' : 'Não'}" />
+                </p:column>
+
+                <!-- Ações -->
+                <p:column headerText="Ações" style="width: 10%;">
+                    <p:commandButton icon="pi pi-pencil"
+                                     update=":dialogs:panel-content"
+                                     oncomplete="PF('dlgTaskRegistro').show()"
+                                     styleClass="ui-button-rounded ui-button-success"
+                                     process="@this">
+                        <f:setPropertyActionListener value="#{task}" target="#{taskMB.task}" />
+                        <p:resetInput target=":dialogs:panel-content" />
+                    </p:commandButton>
+                    <p:commandButton icon="pi pi-trash"
+                                     process="@this"
+                                     oncomplete="PF('dlgEliminarTask').show()"
+                                     styleClass="ui-button-rounded ui-button-danger">
+                        <f:setPropertyActionListener value="#{task}" target="#{taskMB.task}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <!-- Modal de Edição/Criação -->
+        <h:form id="dialogs">
+            <p:dialog header="Task" showEffect="fade" modal="true" widgetVar="dlgTaskRegistro" responsive="true">
+                <p:outputPanel id="panel-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty taskMB.task}">
+                        <div class="field">
+                            <p:outputLabel for="titulo">Título</p:outputLabel>
+                            <p:inputText id="titulo" value="#{taskMB.task.titulo}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="descricao">Descrição</p:outputLabel>
+                            <p:inputTextarea id="descricao" value="#{taskMB.task.descricao}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="responsavel">Responsável</p:outputLabel>
+                            <p:inputText id="responsavel" value="#{taskMB.task.responsavel}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="prioridade">Prioridade</p:outputLabel>
+                            <p:selectOneMenu id="prioridade" value="#{taskMB.task.prioridade}">
+                                <f:selectItem itemLabel="Baixa" itemValue="Baixa" />
+                                <f:selectItem itemLabel="Média" itemValue="Média" />
+                                <f:selectItem itemLabel="Alta" itemValue="Alta" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="deadline">Deadline</p:outputLabel>
+                            <p:calendar id="deadline" value="#{taskMB.task.deadline}" pattern="dd/MM/yyyy" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="concluida">Concluída</p:outputLabel>
+                            <p:selectBooleanCheckbox id="concluida" value="#{taskMB.task.concluida}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Salvar" icon="pi pi-check"
+                                     actionListener="#{taskMB.editar()}"
+                                     update=":form:dt-tasks, :messages"
+                                     process="panel-content @this" />
+                    <p:commandButton value="Cancelar" icon="pi pi-times"
+                                     onclick="PF('dlgTaskRegistro').hide()"
+                                     class="ui-button-secondary"
+                                     type="button" />
+                </f:facet>
+            </p:dialog>
+
+            <!-- Modal de Confirmação de Exclusão -->
+            <p:confirmDialog widgetVar="dlgEliminarTask" showEffect="fade" width="300"
+                             message="Deseja excluir esta tarefa?"
+                             header="Confirmação" severity="warn">
+                <p:commandButton value="Sim" icon="pi pi-check"
+                                 actionListener="#{taskMB.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('dlgEliminarTask').hide()" />
+                <p:commandButton value="Não" type="button" styleClass="ui-button-secondary"
+                                 icon="pi pi-times"
+                                 onclick="PF('dlgEliminarTask').hide()" />
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>
