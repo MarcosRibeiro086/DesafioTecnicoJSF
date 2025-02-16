@@ -1,8 +1,9 @@
-Documentação do Projeto TaskManager
+                                                                        PROJETO TASK MANAGER
 
-Descrição do Projeto
-Este projeto é um gerenciador de tarefas implementado com Jakarta EE, usando WildFly como servidor de aplicação e PostgreSQL como banco de dados. A página principal (index.xhtml) contém um formulário para cadastro de tarefas, uma tabela para exibição de registros e opções de filtragem, além de funcionalidades de edição e exclusão dos registros.
-![alt text](image.png)
+
+Este projeto tem como objetivo ser um gerenciador de tarefas aonde o usuário cadastra seu titulo, descrição, responsável e deadline, implementado com Jakarta EE, usando WildFly como servidor de aplicação e PostgreSQL como banco de dados. A página principal (index.xhtml) contém um formulário para cadastro de tarefas, uma tabela para exibição de registros e opções de filtragem, além de funcionalidades de edição e exclusão dos registros.
+
+![alt text](image-1.png)
 
 Estrutura do Projeto
 A estrutura do projeto é a seguinte:
