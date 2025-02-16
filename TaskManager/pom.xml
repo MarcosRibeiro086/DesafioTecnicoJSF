@@ -13,8 +13,7 @@
     </properties>
     
     <dependencies>
-        <!-- Jakarta EE 10 API -->
-        <!--Entorno empresarial-->
+  
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -22,8 +21,7 @@
             <scope>provided</scope>
         </dependency>
     
-        <!-- Opcional: Si deseas usar una versión específica de JSF puedes agregar esta dependencia -->
-        <!--Jakarta Server Faces 4.0-->
+
         <dependency>
             <groupId>jakarta.faces</groupId>
             <artifactId>jakarta.faces-api</artifactId>
@@ -31,7 +29,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--Inyeccion de dependencia-->
+        
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
@@ -45,32 +43,32 @@
             <version>4.0.2</version>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+     
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.4</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+      
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.6.1.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+    
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.6.15.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-jpamodelgen -->
+    
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>6.6.1.Final</version>
         </dependency>
 
-        <!-- Jakarta EE / jakarta.* / Faces 4.0+  -->	
+   
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -83,7 +81,7 @@
             <version>3.3.1</version>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

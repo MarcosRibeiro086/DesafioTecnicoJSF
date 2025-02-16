@@ -18,14 +18,9 @@ public class TaskRepository extends CrudRepository<Task> {
     @PersistenceContext(unitName = "TASK_MAN")
     private EntityManager em;
 
- public TaskRepository() {
-    super(Task.class);
-    if (em == null) {
-        System.err.println("EntityManager não foi injetado!");
-    } else {
-        System.out.println("EntityManager injetado com sucesso!");
-    }
-}
+    public TaskRepository() {
+       super(Task.class);
+   }
 
     @Override
     protected EntityManager getEntityManager() {

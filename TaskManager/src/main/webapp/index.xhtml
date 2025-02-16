@@ -13,8 +13,12 @@
         <h:form id="form">
             <p:growl id="messages" showDetail="true" />
             
-            <!-- Toolbar com Botão Novo e Atualizar -->
+            <!-- Toolbar com Botão Novo e titulo -->
             <p:toolbar>
+                <p:toolbarGroup>
+                    <p:outputLabel value="Task Manager" 
+                                   style="font-size: 1.5rem; font-weight: bold; color: black; text-align: center; flex: 1" />
+                </p:toolbarGroup>
                 <p:toolbarGroup>
                     <p:commandButton value="Novo" icon="pi pi-plus"
                                      actionListener="#{taskMB.novo()}"
@@ -27,6 +31,7 @@
                 </p:toolbarGroup>
             </p:toolbar>
 
+
             <!-- Tabela de Tarefas -->
             <p:dataTable id="dt-tasks"
                          widgetVar="dtTasks"
@@ -38,15 +43,6 @@
                          rows="10"
                          paginatorPosition="bottom">
 
-                <f:facet name="header">
-                    <div class="tasks-table-header">
-                        <span style="font-weight: bold">Tasks</span>
-                        <span class="filter-container ui-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <p:inputText id="globalFilter" onkeyup="PF('dtTasks').filter()" placeholder="Buscar..." />
-                        </span>
-                    </div>
-                </f:facet>
 
                 <p:column headerText="Título" filterBy="#{task.titulo}">
                     <h:outputText value="#{task.titulo}" />
@@ -60,13 +56,13 @@
                 <p:column headerText="Prioridade" filterBy="#{task.prioridade}">
                     <h:outputText value="#{task.prioridade}" />
                 </p:column>
+                <p:column headerText="Concluída" filterBy="#{task.concluida ? 'Sim' : 'Não'}" >
+                    <h:outputText value="#{task.concluida ? 'Sim' : 'Não'}" />
+                </p:column>
                 <p:column headerText="Deadline">
                     <h:outputText value="#{task.deadline}">
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText>
-                </p:column>
-                <p:column headerText="Concluída" filterBy="#{task.concluida ? 'Sim' : 'Não'}" >
-                    <h:outputText value="#{task.concluida ? 'Sim' : 'Não'}" />
                 </p:column>
 
                 <!-- Ações -->

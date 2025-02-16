@@ -52,4 +52,5 @@ public class TaskServiceImpl implements ITaskService {
     public List<Task> loadTasks(int first, int pageSize, String sortField, SortOrder sortOrder) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }
